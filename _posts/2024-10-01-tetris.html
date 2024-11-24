@@ -1,0 +1,139 @@
+---
+layout: post
+title: "늘보와 함께하는 테트리스 게임"
+date: 2024-10-01 15:00:00 +0900
+categories: [게임]
+tags: [테트리스, HTML5, JavaScript]
+---
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2인용 테트리스</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            position: relative;
+            overflow: hidden;
+            flex-direction: column; /* 세로 방향으로 정렬 */
+        }
+        #background-image {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            width: 200px;
+            height: auto;
+            z-index: -1;
+        }
+        #name-input {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* 중앙 정렬 */
+            background-color: rgba(255, 255, 255, 0.9); /* 배경색 추가 */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+            width: 300px; /* 너비 설정 */
+            text-align: center; /* 텍스트 중앙 정렬 */
+        }
+        input[type="text"] {
+            padding: 10px;
+            margin: 10px 0; /* 위아래 여백 추가 */
+            border: 1px solid #ccc; /* 테두리 색상 */
+            border-radius: 5px; /* 테두리 둥글게 */
+            font-size: 16px; /* 글자 크기 */
+            width: 100%; /* 너비 100% */
+            box-sizing: border-box; /* 패딩 포함 */
+        }
+        button {
+            padding: 10px;
+            background-color: #4CAF50; /* 버튼 배경색 */
+            color: white; /* 글자색 */
+            border: none; /* 테두리 없음 */
+            border-radius: 5px; /* 둥글게 */
+            cursor: pointer; /* 커서 포인터 */
+            font-size: 16px; /* 글자 크기 */
+            transition: background-color 0.3s; /* 배경색 전환 효과 */
+            width: 100%; /* 버튼 너비 100% */
+        }
+        button:hover {
+            background-color: #45a049; /* 호버 시 색상 변경 */
+        }
+        #game-container {
+            display: flex;
+            gap: 40px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            justify-content: center; /* 중앙 정렬 */
+            align-items: center; /* 수직 중앙 정렬 */
+            margin-top: 20px; /* 위쪽 여백 추가 */
+        }
+        .player-container {
+            text-align: center;
+        }
+        canvas {
+            border: 2px solid #333;
+            width: 300px;
+            height: 500px;
+        }
+        #video-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+        #proposal-video {
+            max-width: 90%;
+            max-height: 90%;
+        }
+    </style>
+</head>
+<body>
+    <img id="background-image" src="/assets/img/dora.png" alt="도라에몽">
+    
+    <div id="name-input">
+        <h2>플레이어 이름 입력</h2>
+        <input type="text" id="player1-name" placeholder="Player 1 이름" />
+        <input type="text" id="player2-name" placeholder="Player 2 이름" />
+        <button id="start-game">게임 시작</button>
+    </div>
+
+    <div id="game-container" style="display: none;">
+        <div class="player-container">
+            <h2 id="player1-title">Player 1</h2>
+            <canvas id="tetris1" width="300" height="500"></canvas>
+            <p>점수: <span id="score1">0</span></p>
+        </div>
+        <div class="player-container">
+            <h2 id="player2-title">Player 2</h2>
+            <canvas id="tetris2" width="300" height="500"></canvas>
+            <p>점수: <span id="score2">0</span></p>
+        </div>
+    </div>
+    
+    <div id="video-container">
+        <iframe id="proposal-video" width="640" height="480" 
+            src="https://www.youtube.com/embed/G-Zfozy7gGI" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+        </iframe>
+    </div>
+
+    <script src="/assets/js/tetris.js"></script> <!-- JavaScript 파일 링크 -->
+</body>
+</html>
