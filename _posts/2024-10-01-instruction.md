@@ -45,4 +45,4 @@
 
 ## 라이선스
 
-© 2024 YunKwang You. Some rights reserved.
+© 2024 SlowisSloth. Some rights reserved.
