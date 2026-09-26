@@ -8,6 +8,11 @@
 
 set -eu
 
+bundle_cmd=(bundle)
+if command -v rbenv >/dev/null 2>&1; then
+  bundle_cmd=(rbenv exec bundle)
+fi
+
 SITE_DIR="_site"
 
 _config="_config.yml"
@@ -57,11 +62,11 @@ main() {
   read_baseurl
 
   # build
-  JEKYLL_ENV=production bundle exec jekyll b \
+  JEKYLL_ENV=production "${bundle_cmd[@]}" exec jekyll b \
     -d "$SITE_DIR$_baseurl" -c "$_config"
 
   # test
-  bundle exec htmlproofer "$SITE_DIR" \
+  "${bundle_cmd[@]}" exec htmlproofer "$SITE_DIR" \
     --disable-external \
     --ignore-urls "/^http:\/\/127.0.0.1/,/^http:\/\/0.0.0.0/,/^http:\/\/localhost/"
 }

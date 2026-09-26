@@ -47,6 +47,16 @@ refactor: true
   {% endfor %}
 {% endif %}
 
+<section class="card mb-4" aria-labelledby="write-heading">
+  <div class="card-body d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3">
+    <div>
+      <h2 id="write-heading" class="h5 mb-1">새 음악평론 쓰기</h2>
+      <p class="text-muted mb-0">사이트에서 초안을 작성하고 GitHub 저장소에 발행할 수 있습니다.</p>
+    </div>
+    <a class="btn btn-primary flex-shrink-0" href="{{ '/write/' | relative_url }}">글쓰기</a>
+  </div>
+</section>
+
 <div id="post-list" class="flex-grow-1 px-xl-1">
   {% for post in posts %}
     <article class="card-wrapper card">

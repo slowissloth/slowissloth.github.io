@@ -1,0 +1,96 @@
+---
+layout: null
+permalink: /write/
+sitemap: false
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="no-referrer">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src https://api.github.com; form-action 'none'; base-uri 'none'">
+    <title>새 음악평론 쓰기 · {{ site.title }}</title>
+    <link rel="icon" href="{{ '/assets/img/favicons/favicon-32x32.png' | relative_url }}">
+    <link rel="stylesheet" href="{{ '/assets/css/music-editor.css' | relative_url }}">
+    <script type="module" src="{{ '/assets/js/music-editor.mjs' | relative_url }}"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="back-link" href="{{ '/' | relative_url }}">← 홈페이지로</a>
+      <span class="site-name">{{ site.title }}</span>
+    </header>
+
+    <main class="page-shell">
+      <div class="page-intro">
+        <span class="eyebrow">운영자 글쓰기</span>
+        <h1>새 음악평론 쓰기</h1>
+        <p>글을 쓰는 동안 초안은 이 브라우저에 저장됩니다. 발행 전에는 공개되지 않습니다.</p>
+      </div>
+
+      <div class="editor-layout">
+        <form id="review-form" class="editor-card" data-owner="slowissloth" data-repo="slowissloth.github.io" data-branch="master" novalidate>
+          <div class="field">
+            <label for="review-title">글 제목 <span aria-hidden="true">*</span></label>
+            <input id="review-title" name="title" type="text" maxlength="160" placeholder="예: 곡명 - 아티스트" required>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="review-tags">태그</label>
+              <input id="review-tags" name="tags" type="text" maxlength="200" placeholder="예: 재즈, 기타, 라이브">
+              <p class="field-hint">쉼표로 구분하세요. 카테고리는 음악평론으로 고정됩니다.</p>
+            </div>
+            <div class="field">
+              <label for="review-slug">글 주소</label>
+              <input id="review-slug" name="slug" type="text" maxlength="90" pattern="[a-z0-9]+(-[a-z0-9]+)*" placeholder="영문-숫자-하이픈" required>
+              <p class="field-hint">주소에 쓸 영문·숫자·하이픈입니다. 자동 입력 후 수정할 수 있습니다.</p>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="label-line">
+              <label for="review-body">본문 <span aria-hidden="true">*</span></label>
+              <span>마크다운 지원</span>
+            </div>
+            <textarea id="review-body" name="body" rows="18" placeholder="음악을 들으며 인상 깊었던 소리와 그 이유를 자유롭게 적어보세요." required></textarea>
+            <p class="field-hint">소제목은 <code>## 제목</code>, 강조는 <code>**문장**</code>처럼 적을 수 있습니다.</p>
+          </div>
+
+          <div class="file-preview" aria-live="polite">
+            발행 파일: <code id="file-name">제목을 입력하면 표시됩니다.</code>
+          </div>
+
+          <details class="publish-details">
+            <summary>GitHub에 바로 발행하기</summary>
+            <p>발행 시 GitHub 저장소에 새 글이 커밋됩니다. 이 저장소만 선택하고 <strong>Contents: Read and write</strong> 권한만 준 <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">fine-grained 토큰</a>을 입력하세요.</p>
+            <div class="field">
+              <label for="github-token">GitHub 토큰</label>
+              <input id="github-token" name="token" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…">
+              <p class="field-hint">토큰은 초안에 저장되지 않으며 GitHub API로 발행할 때만 사용합니다.</p>
+            </div>
+          </details>
+
+          <div class="actions">
+            <button id="download-button" class="button button-secondary" type="button">마크다운 내려받기</button>
+            <button id="publish-button" class="button button-primary" type="submit">GitHub에 발행</button>
+          </div>
+          <p id="status" class="status" role="status" aria-live="polite"></p>
+          <div id="published-links" class="published-links" hidden></div>
+        </form>
+
+        <aside class="help-card" aria-labelledby="help-title">
+          <h2 id="help-title">작성 순서</h2>
+          <ol>
+            <li>제목과 본문을 적습니다.</li>
+            <li>필요하면 태그와 글 주소를 다듬습니다.</li>
+            <li>파일을 내려받거나 GitHub 토큰으로 발행합니다.</li>
+          </ol>
+          <p>발행은 공개 사이트에서만 가능합니다. 로컬 미리보기에서는 파일을 내려받아 확인할 수 있습니다.</p>
+          <button id="clear-button" class="text-button" type="button">이 브라우저의 초안 지우기</button>
+        </aside>
+      </div>
+    </main>
+    <noscript>글쓰기 화면을 사용하려면 JavaScript를 켜 주세요.</noscript>
+  </body>
+</html>
