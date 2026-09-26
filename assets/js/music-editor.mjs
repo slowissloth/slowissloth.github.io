@@ -13,6 +13,7 @@ const publishButton = document.querySelector('#publish-button');
 const downloadButton = document.querySelector('#download-button');
 const clearButton = document.querySelector('#clear-button');
 const details = document.querySelector('.publish-details');
+const saveState = document.querySelector('#save-state');
 const draftKey = 'slowissloth-music-review-draft-v1';
 const { owner, repo, branch } = form.dataset;
 const isPublishedSite = location.protocol === 'https:' && location.hostname === `${owner}.github.io`;
@@ -37,7 +38,9 @@ function readFields() {
 function saveDraft() {
   try {
     localStorage.setItem(draftKey, JSON.stringify(readFields()));
+    saveState.textContent = '방금 이 브라우저에 저장했습니다.';
   } catch {
+    saveState.textContent = '자동 저장을 사용할 수 없습니다.';
     setStatus('브라우저 저장 공간을 사용할 수 없습니다. 마크다운 파일을 내려받아 보관해 주세요.', 'error');
   }
 }
@@ -51,6 +54,7 @@ function restoreDraft() {
     slugInput.value = typeof draft.slug === 'string' ? draft.slug : '';
     bodyInput.value = typeof draft.body === 'string' ? draft.body : '';
     slugEdited = Boolean(slugInput.value);
+    saveState.textContent = '저장된 초안을 불러왔습니다.';
   } catch {
     // A damaged browser draft must not prevent writing a new post.
   }
@@ -187,6 +191,7 @@ clearButton.addEventListener('click', () => {
   links.hidden = true;
   links.replaceChildren();
   updateFileName();
+  saveState.textContent = '새 초안을 시작할 수 있습니다.';
   setStatus('초안을 지웠습니다.');
   titleInput.focus();
 });

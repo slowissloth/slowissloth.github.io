@@ -8,6 +8,7 @@ sitemap: false
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f3ed">
     <meta name="referrer" content="no-referrer">
     <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src https://api.github.com; form-action 'none'; base-uri 'none'">
     <title>새 음악평론 쓰기 · {{ site.title }}</title>
@@ -17,77 +18,109 @@ sitemap: false
   </head>
   <body>
     <header class="site-header">
-      <a class="back-link" href="{{ '/' | relative_url }}">← 홈페이지로</a>
-      <span class="site-name">{{ site.title }}</span>
+      <div class="site-header__inner">
+        <a class="site-brand" href="{{ '/' | relative_url }}">
+          <span class="site-brand__mark" aria-hidden="true"><span></span></span>
+          <span>{{ site.title }}<small>THE LISTENING JOURNAL</small></span>
+        </a>
+        <a class="back-link" href="{{ '/' | relative_url }}">← 홈으로 돌아가기</a>
+      </div>
     </header>
 
     <main class="page-shell">
-      <div class="page-intro">
-        <span class="eyebrow">운영자 글쓰기</span>
-        <h1>새 음악평론 쓰기</h1>
-        <p>글을 쓰는 동안 초안은 이 브라우저에 저장됩니다. 발행 전에는 공개되지 않습니다.</p>
+      <section class="page-intro" aria-labelledby="page-title">
+        <div class="page-intro__copy">
+          <span class="eyebrow">WRITING DESK <span aria-hidden="true">/</span> 음악평론</span>
+          <h1 id="page-title">오래 듣고, <em>깊게 쓰다.</em></h1>
+          <p>마음에 남은 한 곡을 당신의 문장으로 남겨보세요.</p>
+        </div>
+        <div class="hero-record" aria-hidden="true"><span>33⅓</span></div>
+      </section>
+
+      <div class="draft-indicator">
+        <span class="draft-indicator__dot" aria-hidden="true"></span>
+        <strong>초안 자동 저장</strong>
+        <span id="save-state">이 브라우저에만 보관되며 발행 전에는 공개되지 않습니다.</span>
       </div>
 
       <div class="editor-layout">
         <form id="review-form" class="editor-card" data-owner="slowissloth" data-repo="slowissloth.github.io" data-branch="master" novalidate>
-          <div class="field">
+          <div class="form-heading">
+            <span class="section-index">01 <span aria-hidden="true">/</span> NEW REVIEW</span>
+            <h2>새 음악평론</h2>
+            <p>제목을 붙이고, 곡에서 들은 것을 자유롭게 적어보세요.</p>
+          </div>
+
+          <div class="field field--title">
             <label for="review-title">글 제목 <span aria-hidden="true">*</span></label>
-            <input id="review-title" name="title" type="text" maxlength="160" placeholder="예: 곡명 - 아티스트" required>
+            <input id="review-title" name="title" type="text" maxlength="160" placeholder="어떤 음악을 들으셨나요?" required>
           </div>
 
-          <div class="field-row">
-            <div class="field">
-              <label for="review-tags">태그</label>
-              <input id="review-tags" name="tags" type="text" maxlength="200" placeholder="예: 재즈, 기타, 라이브">
-              <p class="field-hint">쉼표로 구분하세요. 카테고리는 음악평론으로 고정됩니다.</p>
-            </div>
-            <div class="field">
-              <label for="review-slug">글 주소</label>
-              <input id="review-slug" name="slug" type="text" maxlength="90" pattern="[a-z0-9]+(-[a-z0-9]+)*" placeholder="영문-숫자-하이픈" required>
-              <p class="field-hint">주소에 쓸 영문·숫자·하이픈입니다. 자동 입력 후 수정할 수 있습니다.</p>
-            </div>
-          </div>
-
-          <div class="field">
+          <div class="field field--body">
             <div class="label-line">
               <label for="review-body">본문 <span aria-hidden="true">*</span></label>
-              <span>마크다운 지원</span>
+              <span>MARKDOWN</span>
             </div>
-            <textarea id="review-body" name="body" rows="18" placeholder="음악을 들으며 인상 깊었던 소리와 그 이유를 자유롭게 적어보세요." required></textarea>
-            <p class="field-hint">소제목은 <code>## 제목</code>, 강조는 <code>**문장**</code>처럼 적을 수 있습니다.</p>
+            <textarea id="review-body" name="body" rows="18" placeholder="처음 귀에 들어온 소리, 오래 남은 장면, 다시 듣고 싶은 이유부터 적어보세요." required></textarea>
+            <p class="field-hint">소제목 <code>## 제목</code> · 강조 <code>**문장**</code>을 사용할 수 있습니다.</p>
           </div>
 
-          <div class="file-preview" aria-live="polite">
-            발행 파일: <code id="file-name">제목을 입력하면 표시됩니다.</code>
-          </div>
-
-          <details class="publish-details">
-            <summary>GitHub에 바로 발행하기</summary>
-            <p>발행 시 GitHub 저장소에 새 글이 커밋됩니다. 이 저장소만 선택하고 <strong>Contents: Read and write</strong> 권한만 준 <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">fine-grained 토큰</a>을 입력하세요.</p>
-            <div class="field">
-              <label for="github-token">GitHub 토큰</label>
-              <input id="github-token" name="token" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…">
-              <p class="field-hint">토큰은 초안에 저장되지 않으며 GitHub API로 발행할 때만 사용합니다.</p>
+          <details class="metadata-details">
+            <summary><span>태그와 글 주소</span><small>선택 사항 · 자동 생성된 주소를 바꿀 수 있어요</small></summary>
+            <div class="metadata-details__body field-row">
+              <div class="field">
+                <label for="review-tags">태그</label>
+                <input id="review-tags" name="tags" type="text" maxlength="200" placeholder="예: 재즈, 기타, 라이브">
+                <p class="field-hint">쉼표로 구분해 주세요.</p>
+              </div>
+              <div class="field">
+                <label for="review-slug">글 주소</label>
+                <input id="review-slug" name="slug" type="text" maxlength="90" pattern="[a-z0-9]+(-[a-z0-9]+)*" placeholder="영문-숫자-하이픈" required>
+                <p class="field-hint">영문·숫자·하이픈으로 입력해 주세요.</p>
+              </div>
             </div>
           </details>
 
-          <div class="actions">
-            <button id="download-button" class="button button-secondary" type="button">마크다운 내려받기</button>
-            <button id="publish-button" class="button button-primary" type="submit">GitHub에 발행</button>
+          <div class="publish-area">
+            <div class="file-preview" aria-live="polite">
+              <span>저장될 파일</span>
+              <code id="file-name">제목을 입력하면 표시됩니다.</code>
+            </div>
+
+            <details class="publish-details">
+              <summary>GitHub 발행 준비 <span>토큰 입력 안내</span></summary>
+              <div class="publish-details__body">
+                <p>사이트에 직접 발행하려면 이 저장소만 선택하고 <strong>Contents: Read and write</strong> 권한을 준 <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">fine-grained 토큰</a>을 입력하세요.</p>
+                <div class="field">
+                  <label for="github-token">GitHub 토큰</label>
+                  <input id="github-token" name="token" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…">
+                  <p class="field-hint">토큰은 초안에 저장되지 않으며 발행 후 입력란에서 지워집니다.</p>
+                </div>
+              </div>
+            </details>
+
+            <div class="actions">
+              <button id="download-button" class="button button-secondary" type="button">마크다운 내려받기 <span aria-hidden="true">↓</span></button>
+              <button id="publish-button" class="button button-primary" type="submit">GitHub에 발행 <span aria-hidden="true">↗</span></button>
+            </div>
+            <p id="status" class="status" role="status" aria-live="polite"></p>
+            <div id="published-links" class="published-links" hidden></div>
           </div>
-          <p id="status" class="status" role="status" aria-live="polite"></p>
-          <div id="published-links" class="published-links" hidden></div>
         </form>
 
         <aside class="help-card" aria-labelledby="help-title">
-          <h2 id="help-title">작성 순서</h2>
-          <ol>
-            <li>제목과 본문을 적습니다.</li>
-            <li>필요하면 태그와 글 주소를 다듬습니다.</li>
-            <li>파일을 내려받거나 GitHub 토큰으로 발행합니다.</li>
+          <span class="section-index">A NOTE FOR YOU</span>
+          <h2 id="help-title">어디서부터 쓸까요?</h2>
+          <p class="help-card__intro">완벽한 문장보다, 처음 들었을 때의 감각을 먼저 남겨보세요.</p>
+          <ol class="writing-prompts">
+            <li><span>01</span><div><strong>첫인상</strong><p>가장 먼저 귀를 붙잡은 소리는 무엇인가요?</p></div></li>
+            <li><span>02</span><div><strong>기억</strong><p>어떤 장면이나 감정이 떠올랐나요?</p></div></li>
+            <li><span>03</span><div><strong>다시 듣기</strong><p>이 곡을 또 듣고 싶은 이유는 무엇인가요?</p></div></li>
           </ol>
-          <p>발행은 공개 사이트에서만 가능합니다. 로컬 미리보기에서는 파일을 내려받아 확인할 수 있습니다.</p>
-          <button id="clear-button" class="text-button" type="button">이 브라우저의 초안 지우기</button>
+          <div class="help-card__footer">
+            <p>마크다운 파일로 보관하거나 GitHub에 바로 발행할 수 있습니다.</p>
+            <button id="clear-button" class="text-button" type="button">이 브라우저의 초안 지우기</button>
+          </div>
         </aside>
       </div>
     </main>
